@@ -15,6 +15,7 @@ import 'package:mobile_scanner/src/mobile_scanner_view_attributes.dart';
 import 'package:mobile_scanner/src/objects/barcode_capture.dart';
 import 'package:mobile_scanner/src/objects/mobile_scanner_state.dart';
 import 'package:mobile_scanner/src/objects/start_options.dart';
+import 'package:flutter/foundation.dart';
 
 /// The controller for the [MobileScanner] widget.
 class MobileScannerController extends ValueNotifier<MobileScannerState> {
@@ -242,7 +243,7 @@ class MobileScannerController extends ValueNotifier<MobileScannerState> {
     return MobileScannerPlatform.instance.analyzeImage(path, formats: formats);
   }
 
-  /// take photo
+  /// Take photo
   Future<Uint8List?> takePhoto(){
     return MobileScannerPlatform.instance.takePhoto();
   }
