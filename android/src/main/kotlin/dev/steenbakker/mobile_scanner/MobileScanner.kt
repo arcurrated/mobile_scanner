@@ -35,7 +35,6 @@ import dev.steenbakker.mobile_scanner.objects.MobileScannerStartParameters
 import dev.steenbakker.mobile_scanner.utils.YuvToRgbConverter
 import dev.steenbakker.mobile_scanner.utils.serialize
 import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import io.flutter.view.TextureRegistry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,6 +43,7 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.util.concurrent.Executors
 import kotlin.math.roundToInt
+import io.flutter.plugin.common.MethodChannel
 
 class MobileScanner(
     private val activity: Activity,
@@ -611,14 +611,14 @@ class MobileScanner(
     fun takePhoto(result: MethodChannel.Result){
         var torchState = false
         camera?.let {
-            torckState = it.cameraInfo.torchState.value == TorchState.ON
+            torchState = it.cameraInfo.torchState.value == TorchState.ON
         }
 
         cameraProvider?.unbindAll()
 
         camera = cameraProvider?.bindToLifecycle(
                 activity as LifecycleOwner,
-                cameraSelector!,
+                cameraSelector!!,
                 imageCapture,
         )
 

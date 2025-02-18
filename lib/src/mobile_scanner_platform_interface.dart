@@ -6,7 +6,7 @@ import 'package:mobile_scanner/src/mobile_scanner_view_attributes.dart';
 import 'package:mobile_scanner/src/objects/barcode_capture.dart';
 import 'package:mobile_scanner/src/objects/start_options.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:flutter/foundation.dart';
+import 'dart:typed_data';
 
 /// The platform interface for the `mobile_scanner` plugin.
 abstract class MobileScannerPlatform extends PlatformInterface {
