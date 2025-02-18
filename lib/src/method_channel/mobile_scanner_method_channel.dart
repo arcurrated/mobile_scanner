@@ -13,7 +13,6 @@ import 'package:mobile_scanner/src/mobile_scanner_view_attributes.dart';
 import 'package:mobile_scanner/src/objects/barcode.dart';
 import 'package:mobile_scanner/src/objects/barcode_capture.dart';
 import 'package:mobile_scanner/src/objects/start_options.dart';
-import 'dart:typed_data.dart';
 
 /// An implementation of [MobileScannerPlatform] that uses method channels.
 class MethodChannelMobileScanner extends MobileScannerPlatform {

@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import kotlin.math.roundToInt
 
+import androidx.camera.core.impl.utils.executor.CameraXExecutors
 import io.flutter.plugin.common.MethodChannel
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -60,7 +61,6 @@ class MobileScanner(
     private var displayListener: DisplayManager.DisplayListener? = null
 
     /// moi kolhoz
-    private lateinit var cameraExecutor: ExecutorService
     private var imageCapture: ImageCapture? = null
 
     /// Configurable variables
@@ -584,7 +584,7 @@ class MobileScanner(
         }
 
         imageCapture?.let{
-            it.takePicture(cameraExecutor,
+            it.takePicture(CameraXExecutors.mainThreadExecutor(),
                 object : ImageCapture.OnImageCapturedCallback() {
                     override fun onError(exc: ImageCaptureException) {
                         result.error("IMAGE_CAPTURE_ERROR", "Error occurred", null)

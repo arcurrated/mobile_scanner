@@ -251,9 +251,9 @@ class MobileScannerHandler(
 
     private fun takePhoto(result: MethodChannel.Result) {
         try {
-            val bytes = mobileScanner!!.takePhoto(result)
+            mobileScanner!!.takePhoto(result)
         } catch (e: Exception) {
-            result.error(MobileScannerErrorCodes.GENERIC_ERROR, MobileScannerErrorCodes.INVALID_ZOOM_SCALE_ERROR_MESSAGE, null)
+            result.error(MobileScannerErrorCodes.GENERIC_ERROR, MobileScannerErrorCodes.GENERIC_ERROR_MESSAGE, null)
         }
     }
 
