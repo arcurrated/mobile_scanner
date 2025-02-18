@@ -34,6 +34,8 @@ import dev.steenbakker.mobile_scanner.objects.MobileScannerErrorCodes
 import dev.steenbakker.mobile_scanner.objects.MobileScannerStartParameters
 import dev.steenbakker.mobile_scanner.utils.YuvToRgbConverter
 import dev.steenbakker.mobile_scanner.utils.serialize
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import io.flutter.view.TextureRegistry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
