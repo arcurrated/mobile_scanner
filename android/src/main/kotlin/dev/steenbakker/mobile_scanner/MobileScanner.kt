@@ -18,16 +18,7 @@ import android.util.Size
 import android.view.Surface
 import androidx.annotation.VisibleForTesting
 import androidx.camera.camera2.Camera2Config
-import androidx.camera.core.Camera
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.CameraXConfig
-import androidx.camera.core.ExperimentalGetImage
-import androidx.camera.core.ExperimentalLensFacing
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
-import androidx.camera.core.SurfaceRequest
-import androidx.camera.core.TorchState
+import androidx.camera.core.* 
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.core.resolutionselector.ResolutionStrategy
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -75,6 +66,11 @@ class MobileScanner(
     private var lastScanned: List<String?>? = null
     private var scannerTimeout = false
     private var displayListener: DisplayManager.DisplayListener? = null
+
+    /// moi kolhoz
+    private lateinit var cameraExecutor: ExecutorService
+    private var imageCapture: ImageCapture? = null
+
 
     /// Configurable variables
     var scanWindow: List<Float>? = null
@@ -443,6 +439,12 @@ class MobileScanner(
 
             val analysis = analysisBuilder.build().apply { setAnalyzer(executor, captureOutput) }
 
+            imageCapture = ImageCapture.Builder()
+                .setJpegQuality(80)
+                .setTargetResolution(Size(1080, 1440))
+                .setCaptureMode(0) //CAPTURE_MODE_ZERO_SHUTTER_LAG = 2 //CAPTURE_MODE_MINIMIZE_LATENCY = 1 // CAPTURE_MODE_MAXIMIZE_QUALITY = 0
+                .build()
+
             try {
                 camera = cameraProvider?.bindToLifecycle(
                     activity as LifecycleOwner,
@@ -598,6 +600,50 @@ class MobileScanner(
                 TorchState.OFF -> it.cameraControl.enableTorch(true)
                 TorchState.ON -> it.cameraControl.enableTorch(false)
             }
+        }
+    }
+
+    /**
+     * Takes photo.
+     */
+    fun takePhoto(result: MethodChannel.Result){
+        var torchState = false
+        camera?.let {
+            torckState = it.cameraInfo.torchState.value == TorchState.ON
+        }
+
+        cameraProvider?.unbindAll()
+
+        camera = cameraProvider?.bindToLifecycle(
+                activity as LifecycleOwner,
+                cameraSelector!,
+                imageCapture,
+        )
+
+        camera?.let {
+            if (!it.cameraInfo.hasFlashUnit()) {
+                return@let
+            }
+            it.cameraControl.enableTorch(torchState)
+        }
+
+        imageCapture?.let{
+            it.takePicture(cameraExecutor,
+                object : ImageCapture.OnImageCapturedCallback() {
+                    override fun onError(exc: ImageCaptureException) {
+                        result.error("IMAGE_CAPTURE_ERROR", "Error occurred", null)
+                    }
+
+                    override fun onCaptureSuccess(imageProxy: ImageProxy) {
+                        val bitmap = imageProxy.toBitmap()
+
+                        val stream = ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
+                        val byteArray = stream.toByteArray()
+
+                        result.success(byteArray)
+                    }
+                });
         }
     }
 

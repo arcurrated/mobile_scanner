@@ -1,3 +1,6 @@
+# about fork
+* take photo feature (no barcode caught required)
+
 # mobile_scanner
 
 [![pub package](https://img.shields.io/pub/v/mobile_scanner.svg)](https://pub.dev/packages/mobile_scanner)

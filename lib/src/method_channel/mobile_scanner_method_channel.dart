@@ -232,6 +232,12 @@ class MethodChannelMobileScanner extends MobileScannerPlatform {
   }
 
   @override
+  Future<Uint8List?> takePhoto() async {
+    Uint8List? res = await methodChannel.invokeMethod<Uint8List?>('takePhoto');
+    return res;
+  }
+
+  @override
   Widget buildCameraView() {
     if (_textureId == null) {
       return const SizedBox();

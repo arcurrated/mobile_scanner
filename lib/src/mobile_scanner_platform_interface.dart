@@ -59,6 +59,11 @@ abstract class MobileScannerPlatform extends PlatformInterface {
     throw UnimplementedError('analyzeImage() has not been implemented.');
   }
 
+  /// Take photo
+  Future<Uint8List?> takePhoto(){
+    throw UnimplementedError('takePhoto() has not been implemented.');
+  }
+
   /// Build the camera view for the barcode scanner.
   Widget buildCameraView() {
     throw UnimplementedError('buildCameraView() has not been implemented.');

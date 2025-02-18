@@ -242,6 +242,11 @@ class MobileScannerController extends ValueNotifier<MobileScannerState> {
     return MobileScannerPlatform.instance.analyzeImage(path, formats: formats);
   }
 
+  /// take photo
+  Future<Uint8List?> takePhoto(){
+    return MobileScannerPlatform.instance.takePhoto();
+  }
+
   /// Build a camera preview widget.
   Widget buildCameraView() {
     _throwIfNotInitialized();
