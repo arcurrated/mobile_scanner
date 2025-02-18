@@ -12,6 +12,7 @@ import 'package:mobile_scanner/src/mobile_scanner_view_attributes.dart';
 import 'package:mobile_scanner/src/objects/barcode_capture.dart';
 import 'package:mobile_scanner/src/objects/mobile_scanner_state.dart';
 import 'package:mobile_scanner/src/objects/start_options.dart';
+import 'dart:typed_data';
 
 /// The controller for the [MobileScanner] widget.
 class MobileScannerController extends ValueNotifier<MobileScannerState> {
@@ -226,6 +227,11 @@ class MobileScannerController extends ValueNotifier<MobileScannerState> {
     List<BarcodeFormat> formats = const <BarcodeFormat>[],
   }) {
     return MobileScannerPlatform.instance.analyzeImage(path, formats: formats);
+  }
+
+  /// Take photo
+  Future<Uint8List?> takePhoto(){
+    return MobileScannerPlatform.instance.takePhoto();
   }
 
   /// Build a camera preview widget.

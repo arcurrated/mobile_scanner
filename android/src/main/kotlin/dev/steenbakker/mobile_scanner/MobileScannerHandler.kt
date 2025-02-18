@@ -124,6 +124,7 @@ class MobileScannerHandler(
             "analyzeImage" -> analyzeImage(call, result)
             "setScale" -> setScale(call, result)
             "resetScale" -> resetScale(result)
+            "takePhoto" -> takePhoto(result)
             "updateScanWindow" -> updateScanWindow(call, result)
             else -> result.notImplemented()
         }
@@ -246,6 +247,14 @@ class MobileScannerHandler(
             buildBarcodeScannerOptions(formats),
             analyzeImageSuccessCallback,
             analyzeImageErrorCallback)
+    }
+
+    private fun takePhoto(result: MethodChannel.Result) {
+        try {
+            val bytes = mobileScanner!!.takePhoto(result)
+        } catch (e: Exception) {
+            result.error(MobileScannerErrorCodes.GENERIC_ERROR, MobileScannerErrorCodes.INVALID_ZOOM_SCALE_ERROR_MESSAGE, null)
+        }
     }
 
     private fun toggleTorch(result: MethodChannel.Result) {
