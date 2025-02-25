@@ -462,6 +462,15 @@ public class MobileScanner: NSObject, AVCaptureVideoDataOutputSampleBufferDelega
         }
     }
 
+    /// Take photo (last buffer)
+    func takePhoto(_ result: @escaping FlutterResult) {
+        if(latestBuffer == nil) {
+            result(nil)
+            return
+        }
+        result(FlutterStandardTypedData(bytes: latestBuffer.image.jpegData(compressionQuality: 1)!))
+    }
+
     /// Analyze a single image
     func analyzeImage(image: UIImage, position: AVCaptureDevice.Position,
                       barcodeScannerOptions: BarcodeScannerOptions?, callback: @escaping BarcodeScanningCallback) {

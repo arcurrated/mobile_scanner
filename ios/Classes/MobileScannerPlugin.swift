@@ -113,6 +113,8 @@ public class MobileScannerPlugin: NSObject, FlutterPlugin {
             toggleTorch(result)
         case "analyzeImage":
             analyzeImage(call, result)
+        case "takePhoto":
+            takePhoto(result)
         case "setScale":
             setScale(call, result)
         case "resetScale":
@@ -258,6 +260,11 @@ public class MobileScannerPlugin: NSObject, FlutterPlugin {
         let height = scanWindowData![3] - minY
 
         return CGRect(x: minX, y: minY, width: width, height: height)
+    }
+
+    /// take photo
+    private func takePhoto(_ result: @escaping FlutterResult){
+        mobileScanner.takePhoto(result);
     }
     
     /// Analyzes a single image.
