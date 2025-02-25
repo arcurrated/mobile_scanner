@@ -1,5 +1,15 @@
 # about fork
-* take photo feature (no barcode caught required)
+* !take photo feature (no barcode caught required) in `takePhotoFeature` branch
+
+## steps to take photo
+1. init `MobileScannerController`
+2. attach it to some `MobileScanner` widget
+3. call `controller.takePhoto()` method
+4. get `Uint8List?` and enjoy if it isn't null
+
+## how it works
+* for iOS it is simply `latestBuffer` with corresponding image size
+* for Android it is real `imageCapture`
 
 
 # mobile_scanner
